@@ -1,0 +1,3 @@
+[default]
+EXEC_TIMEOUT = 2
+STATS_TIMER_DELAY = 12

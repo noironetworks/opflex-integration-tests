@@ -1,0 +1,12 @@
+{
+    "policy-space-name": "test",
+    "endpoint-group-name": "group1",
+    "interface-name": "qpf-h1eth",
+    "access-interface":"h1eth",
+    "access-uplink-interface":"qpi-h1eth",
+    "ip": [
+        "10.0.0.4"
+    ],
+    "mac": "92:e2:9b:ad:0b:88",
+    "uuid": "83f18f0b-80f7-46e2-b06c-4d9487b0c754"
+}

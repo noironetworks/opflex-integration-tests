@@ -1,5 +1,7 @@
 #! /bin/bash
-set +e
+
+echo "Provisioning opflex-integration-tests"
+
 #Pick up the current deb package for opflex
 pushd /vagrant/data
 #Install libopflex

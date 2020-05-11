@@ -13,13 +13,38 @@ import glob
 import json
 import logging
 from opflex_integration_tests import utils
+from opflex_integration_tests import logger
+from tests.template_utils import env
+from tests import helper
 import os
 import pytest
 import re
 import sys
 import time
+import pytest
 
-@pytest.fixture(scope="module")
+LOG = logger.get_logger(__name__)
+
+@pytest.fixture(scope = "function")
+def base_fixture(request):
+    LOG.info('-------- Test - %s started --------' % request.node.name)
+    test_ctxt = dict()
+
+    @request.addfinalizer
+    def delete_resources():
+        LOG.info('........ Cleanup for - %s started ........' %
+                 request.node.name)
+        del_resources(request, test_ctxt)
+
+    return test_ctxt
+
+def del_resources(request, test_ctxt):
+    if 'eps' in test_ctxt:
+        helper.delete_ep(test_ctxt)
+    LOG.info('........ Cleanup for - %s ended ........' %
+             request.node.name)
+
+@pytest.fixture(scope="session")
 def ep_store():
     ep_config = {}
     for f in glob.glob('config/*.ep'):
@@ -30,4 +55,5 @@ def ep_store():
             a = json.load(fd)
             ep_config[m.group(1)] = a
     return ep_config
+
 

@@ -18,8 +18,9 @@ import subprocess
 import sys
 import time
 from dynaconf import settings
+from opflex_integration_tests import logger
 
-LOG=logging.getLogger(__name__)
+LOG=logger.get_logger(__name__)
 EXEC_TIMEOUT = settings.EXEC_TIMEOUT
 
 
@@ -35,8 +36,10 @@ def execute(cmdline, expectFailure=False, runWithShell=False):
                                       stderr = subprocess.PIPE)
     output, err = cmd_output.communicate(timeout=EXEC_TIMEOUT)
     if err != b'':
-        LOG.error(err)
+        LOG.error("%s" % err)
     if not expectFailure:
+        if cmd_output.returncode != 0:
+            LOG.error("%s" % output)
         assert(cmd_output.returncode == 0)
     else:
         assert(cmd_output.returncode != 0)

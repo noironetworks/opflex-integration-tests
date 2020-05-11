@@ -1,0 +1,19 @@
+{
+    "uuid": "{{ ep['uuid'] }}", 
+    "access-interface": "{{ ep['acc_int'] }}", 
+    "access-uplink-interface": "qpf-{{ ep['acc_int'] }}", 
+    "interface-name": "qpi-{{ ep['acc_int'] }}", 
+    "ip": [
+        "{{ ep['ip'] }}"
+    ], 
+    "promiscuous-mode": false, 
+    "mac": "{{ ep['mac'] }}", 
+    "policy-space-name": "{{ ep['policy_space_name'] }}", 
+    "endpoint-group-name": "{{ ep['epg']}}",
+    "security-group": 
+    {% if 'sec_grps' in ep %} 
+    {{ ep['sec_grps'] | tojson }}
+    {% else %}
+    []
+    {% endif %} 
+}
